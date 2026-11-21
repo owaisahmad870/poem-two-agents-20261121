@@ -8,4 +8,7 @@ const poem = readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'entry.t
 const n = [...poem].length;
 if (n < 1 || n > 280 || !poem.trim()) throw new Error(`poem is ${n} code points; the gate wants 1..280`);
 mkdirSync(outDir, { recursive: true });
-writeFileSync(join(outDir, 'entry.txt'), poem, 'utf8');
+const outFile = join(outDir, 'entry.txt');
+writeFileSync(outFile, poem, 'utf8');
+// Read back: the gate judges the bytes on disk, so check those, not the string.
+if (readFileSync(outFile, 'utf8') !== poem) throw new Error('entry.txt did not round-trip');
