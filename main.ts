@@ -11,4 +11,4 @@ mkdirSync(outDir, { recursive: true });
 const outFile = join(outDir, 'entry.txt');
 writeFileSync(outFile, poem, 'utf8');
 // Read back: the gate judges the bytes on disk, so check those, not the string.
-if (readFileSync(outFile, 'utf8') !== poem) throw new Error('entry.txt did not round-trip');
+if (readFileSync(outFile, 'utf8') !== poem) throw new Error(`${outFile} did not round-trip`);
